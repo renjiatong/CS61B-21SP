@@ -1,5 +1,6 @@
 package game2048;
 
+import java.security.KeyStore;
 import java.util.Formatter;
 import java.util.Observable;
 
@@ -138,6 +139,14 @@ public class Model extends Observable {
      * */
     public static boolean emptySpaceExists(Board b) {
         // TODO: Fill in this function.
+        int boardLength = b.size();
+        for (int row = 0; row < boardLength; row++) {
+            for (int col = 0; col < boardLength; col++){
+                if (b.tile(col, row) == null) {
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
@@ -148,6 +157,14 @@ public class Model extends Observable {
      */
     public static boolean maxTileExists(Board b) {
         // TODO: Fill in this function.
+        int boardLength = b.size();
+        for (int row = 0; row < boardLength; row++) {
+            for (int col = 0; col < boardLength; col++){
+                if (b.tile(col, row) != null && b.tile(col, row).value() == MAX_PIECE) {
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
@@ -159,6 +176,28 @@ public class Model extends Observable {
      */
     public static boolean atLeastOneMoveExists(Board b) {
         // TODO: Fill in this function.
+        if (emptySpaceExists(b)) return true;
+        int boardLength = b.size();
+        for (int row = 0; row < boardLength; row++) {
+            for (int col = 0; col < boardLength; col++) {
+                if (row < boardLength - 1) {
+                    // compare with down tile
+                    if (b.tile(col, row) != null && b.tile(col, row + 1) != null) {
+                        if (b.tile(col, row).value() == b.tile(col, row + 1).value()) {
+                            return true;
+                        }
+                    }
+                }
+                if (col < boardLength - 1) {
+                    // compare with right tile
+                    if (b.tile(col, row) != null && b.tile(col + 1, row) != null) {
+                        if (b.tile(col, row).value() == b.tile(col + 1, row).value()) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
         return false;
     }
 
